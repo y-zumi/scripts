@@ -1,24 +1,24 @@
 #!bin/bash
 
 if [ $# -ne 1 ]; then
-  exit 1
+  exit 0
 fi
 
 WORK_SPACE=~/ws
 DIR_NAME=$1
 
 if [ -z $DIR_NAME ]; then
-  exit 1
+  exit 0
 fi
 
 mkdir $WORK_SPACE/$DIR_NAME
 cd $WORK_SPACE/$DIR_NAME
 
-if [ -z .git ]; then
+if [ ! -e .git ]; then
   git init
 fi
 
-if [ -z README.md ]; then
+if [ ! -e README.md ]; then
   touch README.md
   echo -e "# Overview\n\n# How to run \n" >> README.md
   git add README.md
@@ -27,7 +27,7 @@ if [ -z README.md ]; then
   git push origin master
 fi
 
-hub browse
+hub browse y-zumi/$DIR_NAME
 code .
 
 # create dir in ws directory
